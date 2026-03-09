@@ -17,7 +17,7 @@ public class Task {
     @Column(name = "title",nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description",length= 1000)
     private String description;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_list_id")
@@ -25,9 +25,10 @@ public class Task {
 
     @Column(name = "due_date")
     private LocalDateTime dueDate;
-
+    @Enumerated(EnumType.STRING)
     @Column(name= "status",nullable = false)
     private TaskStatus status;
+    @Enumerated(EnumType.STRING)
     @Column(name= "priority",nullable = false)
     private TaskPriority taskPriority;
 
