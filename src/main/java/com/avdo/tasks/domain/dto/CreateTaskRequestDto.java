@@ -1,4 +1,4 @@
-package com.avdo.tasks.domain;
+package com.avdo.tasks.domain.dto;
 
 import com.avdo.tasks.domain.entities.TaskPriority;
 import jakarta.annotation.Nullable;
