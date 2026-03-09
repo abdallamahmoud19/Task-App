@@ -2,6 +2,7 @@ package com.avdo.tasks.domain.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -19,12 +20,9 @@ public class Task {
 
     @Column(name = "description",length= 1000)
     private String description;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_list_id")
-    private TaskList taskList;
 
     @Column(name = "due_date")
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
     @Enumerated(EnumType.STRING)
     @Column(name= "status",nullable = false)
     private TaskStatus status;
@@ -33,19 +31,18 @@ public class Task {
     private TaskPriority taskPriority;
 
     @Column(name = "created",nullable = false)
-    private LocalDateTime created;
+    private LocalDate created;
 
     @Column(name = "updated",nullable = false)
-    private LocalDateTime updated;
+    private LocalDate updated;
 
     public Task() {
     }
 
-    public Task(UUID id, String title, String description, TaskList taskList, LocalDateTime dueDate, TaskStatus status, TaskPriority taskPriority, LocalDateTime created, LocalDateTime updated) {
+    public Task(UUID id, String title, String description, LocalDate dueDate, TaskStatus status, TaskPriority taskPriority, LocalDate created, LocalDate updated) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.taskList = taskList;
         this.dueDate = dueDate;
         this.status = status;
         this.taskPriority = taskPriority;
@@ -77,19 +74,11 @@ public class Task {
         this.description = description;
     }
 
-    public TaskList getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(TaskList taskList) {
-        this.taskList = taskList;
-    }
-
-    public LocalDateTime getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -109,19 +98,19 @@ public class Task {
         this.taskPriority = taskPriority;
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
-    public LocalDateTime getUpdated() {
+    public LocalDate getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDateTime updated) {
+    public void setUpdated(LocalDate updated) {
         this.updated = updated;
     }
 
@@ -130,12 +119,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(taskList, task.taskList) && Objects.equals(dueDate, task.dueDate) && status == task.status && taskPriority == task.taskPriority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated);
+        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(dueDate, task.dueDate) && status == task.status && taskPriority == task.taskPriority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, taskList, dueDate, status, taskPriority, created, updated);
+        return Objects.hash(id, title, description, dueDate, status, taskPriority, created, updated);
     }
 
     @Override
@@ -144,7 +133,6 @@ public class Task {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", taskList=" + taskList +
                 ", dueDate=" + dueDate +
                 ", status=" + status +
                 ", taskPriority=" + taskPriority +
