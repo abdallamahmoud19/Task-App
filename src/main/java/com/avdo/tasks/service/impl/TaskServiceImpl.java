@@ -5,10 +5,14 @@ import com.avdo.tasks.domain.entities.Task;
 import com.avdo.tasks.domain.entities.TaskStatus;
 import com.avdo.tasks.repository.TaskRepository;
 import com.avdo.tasks.service.TaskService;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
+@Service
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     TaskServiceImpl(TaskRepository taskRepository){
@@ -31,5 +35,10 @@ public class TaskServiceImpl implements TaskService {
 
 
         return taskRepository.save(newTask);
+    }
+
+    @Override
+    public List<Task> listOfTask() {
+        return taskRepository.findAll(Sort.by(Sort.Direction.ASC,"created"));
     }
 }
