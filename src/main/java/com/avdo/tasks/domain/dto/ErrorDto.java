@@ -1,4 +1,4 @@
 package com.avdo.tasks.domain.dto;
 
-public record ErrorDto() {
+public record ErrorDto(String error) {
 }
