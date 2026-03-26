@@ -1,8 +1,10 @@
 package com.avdo.tasks.controller;
 
 import com.avdo.tasks.domain.CreateTaskRequest;
+import com.avdo.tasks.domain.UpdateTaskRequest;
 import com.avdo.tasks.domain.dto.CreateTaskRequestDto;
 import com.avdo.tasks.domain.dto.TaskResponseDto;
+import com.avdo.tasks.domain.dto.UpdateTaskRequestDto;
 import com.avdo.tasks.domain.entities.Task;
 import com.avdo.tasks.mapper.TaskMapper;
 import com.avdo.tasks.service.TaskService;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/tasks")
@@ -39,7 +42,12 @@ public class TaskController {
         List<Task> listTasks = taskService.listOfTask();
         List<TaskResponseDto> taskDtoList= listTasks.stream().map(taskMapper::toDto).toList();
         return ResponseEntity.ok(taskDtoList);
-
-
+    }
+    @PutMapping(path = "/{taskId}")
+    public ResponseEntity<TaskResponseDto>updateTask(UUID taskId, @RequestBody @Valid UpdateTaskRequestDto updateTaskRequestDto){
+        UpdateTaskRequest updateTaskRequest = taskMapper.fromDto(updateTaskRequestDto);
+        Task updateTask = taskService.updateTask(taskId,updateTaskRequest);
+        TaskResponseDto taskResponseDto = taskMapper.toDto(updateTask);
+    return  ResponseEntity.ok(taskResponseDto);
     }
 }
